@@ -1,6 +1,7 @@
 package pl.speedlog.babel;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -22,6 +23,12 @@ public class BabelGameActivity extends Activity {
     public void theendButtonClick(View view)
     {
     	finish();
+    }
+    
+    //klik "Rekordy"
+    public void rekordyButtonClick(View view) {
+        // TODO Auto-generated method stub
+        startActivity(new Intent(BabelGameActivity.this, Rekordy.class));
     }
 
 }
