@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" android:text="Bąbel v.1" android:textStyle="bold" android:textSize="18pt" android:layout_gravity="center" android:gravity="center"/>
+<Button android:text="@string/start_game" android:id="@+id/button1" android:layout_height="wrap_content" android:gravity="center" android:layout_gravity="center" android:layout_width="140dp" android:layout_marginTop="5pt"></Button>
+<Button android:id="@+id/button2" android:layout_height="wrap_content" android:text="@string/records" android:gravity="center" android:layout_gravity="center" android:layout_width="140dp"></Button>
+<Button android:text="@string/authors" android:id="@+id/button3" android:layout_height="wrap_content" android:gravity="center" android:layout_gravity="center" android:layout_width="140dp" android:onClick="auhorsButtonClick"></Button>
+<Button android:text="@string/close_app" android:id="@+id/button4" android:layout_height="wrap_content" android:gravity="center" android:layout_gravity="center" android:layout_width="140dp"></Button>
+</LinearLayout>

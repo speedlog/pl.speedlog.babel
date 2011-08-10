@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, BabelGameActivity!</string>
+    <string name="app_name">BabelGame</string>
+    <string name="start_game">Nowa gra</string>
+    <string name="records">Rekordy</string>
+    <string name="authors">O autorze</string>
+    <string name="close_app">Koniec</string>
+</resources>
