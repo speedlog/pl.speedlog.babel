@@ -8,7 +8,7 @@ import java.util.List;
 
 import android.app.Activity;
 
-public class ObslugaPliku extends Activity {
+public class FilesHandling extends Activity {
 	
 	    public String[] readLines(String filename) throws IOException {
 	        FileReader fileReader = new FileReader(filename);

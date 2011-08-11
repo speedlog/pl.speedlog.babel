@@ -5,6 +5,6 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
     <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Rekordy" android:id="@+id/textView1" android:layout_gravity="center" android:textSize="18pt"></TextView>
-    <TextView android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/rekordy_lista" android:layout_marginTop="10pt" android:gravity="center"></TextView>
+    <TextView android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/records_list" android:layout_marginTop="10pt" android:gravity="center"></TextView>
     
 </LinearLayout>

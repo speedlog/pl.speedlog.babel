@@ -1,33 +1,29 @@
 package pl.speedlog.babel;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class Rekordy extends Activity {
+public class Records extends Activity {
 	
-	final static String PLIK_REKORDY="babel_rekordy.txt";
-	private String wyniki[];
-	private TextView rekordy;
+	final static String FILE_RECORDS="babel_rekordy.txt";
+	private String results[];
+	private TextView records;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.rekordy);
+        setContentView(R.layout.records);
         
         //pobranie odwo³ania do miejsca na rekordy
-        rekordy=(TextView) findViewById(R.id.rekordy_lista);
+        records=(TextView) findViewById(R.id.records_list);
         
         try {
-			WczytajRekordy();
+			LoadRecords();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -35,20 +31,20 @@ public class Rekordy extends Activity {
 
     }
     
-    private void WczytajRekordy() throws IOException 
+    private void LoadRecords() throws IOException 
     {
 
-        ObslugaPliku pliki=new ObslugaPliku();
+        //FilesHandling fh=new FilesHandling();
         
-		//wyniki=pliki.readLines(PLIK_REKORDY);
-        wyniki= new String[]{
+		//results=fh.readLines(FILE_RECORDS);
+        results= new String[]{
         		"Marian     1000",
         		"Elfik     1500",
         		"Test      500"
         		};
         
-		for (String rekord : wyniki) {
-            rekordy.append(rekord+"\n");
+		for (String record : results) {
+            records.append(record+"\n");
         }
 		
         
