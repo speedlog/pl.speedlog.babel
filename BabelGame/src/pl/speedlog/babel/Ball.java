@@ -1,29 +1,76 @@
 package pl.speedlog.babel;
 
+import pl.speedlog.babel.Board.Panel;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class Ball extends View implements Runnable {
+public class Ball  {
 	
-	private Board board;
+	private Panel panel;
+	private int x;
+	private int y;
+	private int r=10;
+
+
 	private final int points;
 	private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-	public Ball(Context context,Board board, int points) {
-		super(context);
-		
-		this.board=board;
+	public Ball(Panel game_panel, int points, int x, int y) {
+	
+		this.panel=(Panel) game_panel;
 		this.points=points;
+        this.x = x;
+        this.y = y;
+        
+        paint.setColor(0xFFFF0000);
 	}
 	
-	 @Override
-	 protected void onDraw(Canvas canvas) {
-	     super.onDraw(canvas);
-	     //canvas.drawCircle(x, y, r, paint);
-	 }
+	/**
+	 * Getter X coord
+	 * @return
+	 */
+	public int GetX()
+	{
+		return x;
+	}
+	
+	/**
+	 * Getter Y coord
+	 * @return
+	 */
+	public int GetY()
+	{
+		return y;
+	}
+	
+	/**
+	 * Getter R 
+	 * @return
+	 */
+	public int GetR()
+	{
+		return r;
+	}
+	
+	/**
+	 * Getter Paint
+	 * @return
+	 */
+	public Paint GetPaint()
+	{
+		return paint;
+	}
+	
+	/**
+	 * Move ball down
+	 */
+	public void MoveDown()
+	{
+		y++;
+	}
 	
 	/**
 	 * Przeci¹¿ona funkcja nacisniêcia na kulkê
@@ -33,21 +80,10 @@ public class Ball extends View implements Runnable {
 		//je¿eli naciœniêto
 		if(event.getAction()==MotionEvent.ACTION_DOWN)
 		{
-			board.AddPoints(points);
+			//board.AddPoints(points);
 		}
 		
-		return super.onTouchEvent(event);
-	}
-
-
-	/**
-	 * W¹tek - opadanie kulki
-	 */
-	public void run() {
-		
-		
-	}
-	
-	
+		return true;
+	}	
 
 }

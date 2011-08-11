@@ -27,12 +27,12 @@ public class BabelGameActivity extends Activity {
     
     //klik "Rekordy"
     public void recordsButtonClick(View view) {
-        startActivity(new Intent(BabelGameActivity.this, Records.class));
+    	startActivity(new Intent(BabelGameActivity.this, Records.class));
     }
     
     //klik "Nowa gra"
     public void newgameButtonClick(View view) {
-        startActivity(new Intent(BabelGameActivity.this, Board.class));
+    	startActivity(new Intent(BabelGameActivity.this, Board.class));
     }
 
 }
