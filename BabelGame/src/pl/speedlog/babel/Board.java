@@ -7,11 +7,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Board extends Activity{
@@ -36,7 +39,6 @@ public class Board extends Activity{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         //setContentView(R.layout.board); 
-        //this.addContentView(new Panel(this),null);
         setContentView(new Panel(this));
         
 		lvl_label=(TextView) findViewById(R.id.lvl_label);
@@ -47,6 +49,7 @@ public class Board extends Activity{
 		level=1;
 		points=0;
 		missed_balls=0;
+		
     }
 	
 	/**
@@ -106,42 +109,72 @@ public class Board extends Activity{
 	 * Klasa powierzchni, na której bêdziemy rysowaæ obiekty
 	 * @author Mariusz
 	 */
-	class Panel extends SurfaceView implements SurfaceHolder.Callback {
+	class Panel extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 		
 		private MainThread mThread;
 		private ArrayList<Ball> balls = new ArrayList<Ball>();
-
+		private Board board;
+		
 		
 	    public Panel(Context context) {
 			super(context);
+			board=(Board)context;
 			getHolder().addCallback(this);
 			mThread = new MainThread(getHolder(), this);
 			setFocusable(true);
+			
+			Thread watek=new Thread(this);
+			watek.start();
 
 		}
 	    
-	    public boolean onTouchEvent(MotionEvent event) {
-	    	
-	    	synchronized (mThread.getSurfaceHolder())
-	    	{
-	        Ball ball = new Ball(this,15,(int) event.getX() - (20 / 2), (int) event.getY() - (20 / 2));
-	        return balls.add(ball);
-	    	}
+	    public boolean onTouch(View v, MotionEvent event) {
+	        
+            int eventaction = event.getAction(); 
+
+            int X = (int)event.getX(); 
+            int Y = (int)event.getY(); 
+            
+            switch (eventaction ) { 
+
+            case MotionEvent.ACTION_DOWN: // touch down so check if the finger is on a ball
+
+                for (Ball ball : balls) {
+
+                    int x =X;
+                    int y =Y;
+
+                    if (x > ball.GetX() && x < ball.GetX()+Config.BALL_RADIUS && y > ball.GetY() && y < ball.GetY()+Config.BALL_RADIUS)
+                    ball.onClick(v);
+                }
+
+                 break; 
+            }
+            
+            return true;
 	    }
 
+	    
+
+	    /**
+	     * Update state of objects
+	     */
+	    public void updateObjects()
+	    {
+            //update states
+            for (Ball ball : balls) {
+            	if(ball.GetVisible()) ball.MoveDown();
+            	else ball=null;
+            }
+	    }
 	    
 	    @Override
         public void onDraw(Canvas canvas) {
             canvas.drawColor(Color.GRAY);
             
-            //update states
-            for (Ball ball : balls) {
-                ball.MoveDown();
-            }
-            
             //redraw
             for (Ball ball : balls) {
-                canvas.drawCircle(ball.GetX(), ball.GetY(), ball.GetR(), ball.GetPaint());
+            	if(ball.GetVisible()) canvas.drawCircle(ball.GetX(), ball.GetY(), ball.GetR(), ball.GetPaint());
             }
 
         }
@@ -173,7 +206,58 @@ public class Board extends Activity{
 	        }
 
 	    }
+	    
+		@Override
+		public void run() {
+			
+			while(true)
+			{
+		    	synchronized (mThread.getSurfaceHolder())
+		    	{
+		
+		    		//losujemy szybkoœæ spadania
+		    		//int falling_speed=RandomNumber(Config.Get(level, "szybkosc_spadania_min"),
+		    		//							   Config.Get(level, "szybkosc_spadania_max"));
+		    		int falling_speed=RandomNumber(2,5);
+		    		
+		    		//losujemy koordynatê X, na której mamy ustawiæ kulkê
+		    		//minimalna odleg³oœæ od lewej i prawej krawêdzi to promieñ kulki
+		    		//int coordX=RandomNumber(Config.BALL_RADIUS,this.getWidth()-Config.BALL_RADIUS);
+		    		int coordX=RandomNumber(Config.BALL_RADIUS,this.getWidth()-Config.BALL_RADIUS);
+		    		
+		    		//losujemy rodzaj kulki
+		    		//czerwona
+		    		
+			        Ball ball = new Ball(this,board,15, coordX, 0, falling_speed);
+			        balls.add(ball);
+		    	}
+				
+				try {
+					
+					//losujemy czas po którym ma spaœæ kolejna kulka
+					
+					/*synchronized(this)
+					{
+						int next_ball_min=Config.Get(level, "kolejna_kulka_min");
+						int next_ball_max=Config.Get(level, "kolejna_kulka_max");
+						
+						int next_ball_time=RandomNumber(next_ball_min,next_ball_max);
+						Thread.sleep(next_ball_time);
+					}*/
+					
+					int next_ball_time=RandomNumber(1500,2500);
+					Thread.sleep(next_ball_time);
+					
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
 	}
-	
+
 
 }

@@ -6,24 +6,32 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Toast;
 
-public class Ball  {
+public class Ball implements OnClickListener  {
 	
 	private Panel panel;
+	private Board board;
 	private int x;
 	private int y;
-	private int r=10;
+	private int r=Config.BALL_RADIUS;
+	private boolean visible=true;
+	private int FallingSpeed;
+	
 
 
 	private final int points;
 	private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-	public Ball(Panel game_panel, int points, int x, int y) {
+	public Ball(Panel game_panel, Board board, int points, int x, int y, int speed) {
 	
-		this.panel=(Panel) game_panel;
+		this.panel=game_panel;
+		this.board=board;
 		this.points=points;
         this.x = x;
         this.y = y;
+        this.FallingSpeed=speed;
         
         paint.setColor(0xFFFF0000);
 	}
@@ -36,6 +44,7 @@ public class Ball  {
 	{
 		return x;
 	}
+	
 	
 	/**
 	 * Getter Y coord
@@ -69,21 +78,33 @@ public class Ball  {
 	 */
 	public void MoveDown()
 	{
-		y++;
+		y+=FallingSpeed;
 	}
 	
 	/**
-	 * Przeci¹¿ona funkcja nacisniêcia na kulkê
+	 * Getter visible state
 	 */
-	public boolean onTouchEvent(MotionEvent event)
+	public boolean GetVisible()
 	{
-		//je¿eli naciœniêto
-		if(event.getAction()==MotionEvent.ACTION_DOWN)
-		{
-			//board.AddPoints(points);
-		}
+		return this.visible;
+	}
+	
+	/**
+	 * Setter visible state
+	 * @param visible
+	 * @return
+	 */
+	public void SetVisible(boolean visible)
+	{
+		this.visible=visible;
+	}
+
+	@Override
+	public void onClick(View arg0) {
 		
-		return true;
-	}	
+		SetVisible(false);
+		board.AddPoints(points);
+	}
+	
 
 }
