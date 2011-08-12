@@ -4,36 +4,38 @@ import pl.speedlog.babel.Board.Panel;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-public class Ball implements OnClickListener  {
+public abstract class Ball  {
 	
 	private Panel panel;
 	private Board board;
-	private int x;
-	private int y;
-	private int r=Config.BALL_RADIUS;
+	private final int points;
+	private final int x;	//wspó³rzêdna X œrodka kulki
+	private int y; 			//wspó³rzêdna Y œrodka kulki
+	private final int r;
 	private boolean visible=true;
 	private int FallingSpeed;
-	
 
 
-	private final int points;
+
 	private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-	public Ball(Panel game_panel, Board board, int points, int x, int y, int speed) {
+	public Ball(Panel game_panel, Board board, int points, int color, int x, int y, int speed) {
 	
 		this.panel=game_panel;
 		this.board=board;
 		this.points=points;
         this.x = x;
         this.y = y;
+        this.r=Config.BALL_RADIUS;
         this.FallingSpeed=speed;
         
-        paint.setColor(0xFFFF0000);
+        paint.setColor(color);
 	}
 	
 	/**
@@ -43,6 +45,14 @@ public class Ball implements OnClickListener  {
 	public int GetX()
 	{
 		return x;
+	}
+	
+	/**
+	 * Getter Board
+	 */
+	public Board GetBoard()
+	{
+		return board;
 	}
 	
 	
@@ -73,12 +83,25 @@ public class Ball implements OnClickListener  {
 		return paint;
 	}
 	
+	
+	/**
+	 * Ball falled down - out of screen
+	 */
+	public void OutOfScreen()
+	{
+		Log.d("BALL.class","visible=false");
+		SetVisible(false);
+	}
+	
 	/**
 	 * Move ball down
 	 */
 	public void MoveDown()
 	{
 		y+=FallingSpeed;
+		
+		//sprawdzamy czy kulka wysz³a po za ekran
+		if(y-GetR()>panel.getHeight()) OutOfScreen();
 	}
 	
 	/**
@@ -99,11 +122,30 @@ public class Ball implements OnClickListener  {
 		this.visible=visible;
 	}
 
-	@Override
-	public void onClick(View arg0) {
+	/**
+	 * Funkcja odpowiadaj¹ca akcji po trafieniu kulki
+	 */
+	public void Shooted() {
 		
 		SetVisible(false);
-		board.AddPoints(points);
+		//board.AddPoints(points);
+	}
+	
+	/**
+	 * Funkcja sprawdza czy wspó³rzêdne nacisniêtego ekranu odpowiadaja
+	 * wspó³rzêdnym kulki (czy trafiliœmy w kólkê :) )
+	 * @param screen_x
+	 * @param y
+	 */
+	public boolean CheckShoot(int screen_x, int screen_y)
+	{
+		if(!GetVisible()) return false;
+		//Log.d("CHECK_X",screen_x+ " >= " + (GetX()-GetR()) + " && " + screen_x + " <= " + (GetX()+GetR()));
+		//Log.d("CHECK_Y",screen_y+ " >= " + (GetY()-GetR()) + " && " + screen_y + " <= " + (GetY()+GetR()));
+		
+		if(screen_x>=GetX()-GetR() && screen_x <= GetX()+GetR()
+		&&  screen_y>=GetY()-GetR() &&  screen_y <= GetY()+GetR()) return true;
+		else return false;
 	}
 	
 

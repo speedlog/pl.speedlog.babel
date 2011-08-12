@@ -1,6 +1,8 @@
 package pl.speedlog.babel;
 
-import java.util.HashMap;
+import java.util.Hashtable;
+
+import android.util.Log;
 
 /**
  * Klucze konfiguracji:
@@ -13,50 +15,54 @@ import java.util.HashMap;
  */
 public class Config {
 	
-	public static HashMap<String,Integer>[] list;
+	private static Hashtable<Integer, Hashtable> list=new Hashtable<Integer, Hashtable>();
 	
 	final static int GAME_OVER_MISS=10; 	// liczba kulek, które gdy spadn¹ to nast¹pi GAME OVER
 	final static int POINTS_FOR_RED=10;		// punkty po klikniêciu czerwonej kulki
 	final static int POINTS_FOR_BLACK=-15;	// punkty po klikniêciu czarnej kulki
-	final static int BALL_RADIUS=5;
+	final static int BALL_RADIUS=15;
 	
-	static
+	static void Config()
 	{
 		//konfiguracja LVL1
-		list[1]= new HashMap<String,Integer>();
-		list[1].put("szybkosc_spadania_min", 2);
-		list[1].put("szybkosc_spadania_max", 5);
-		list[1].put("kolejna_kulka_min", 2000);
-		list[1].put("kolejna_kulka_max", 2500);
-		list[1].put("kolejny_poziom", 250);
-		list[1].put("procent_czerwonych", 100);
+		Hashtable<String,Integer> newLvl=new Hashtable<String,Integer>();
+		newLvl.put("szybkosc_spadania_min", 2);
+		newLvl.put("szybkosc_spadania_max", 5);
+		newLvl.put("kolejna_kulka_min", 2000);
+		newLvl.put("kolejna_kulka_max", 2500);
+		newLvl.put("kolejny_poziom", 250);
+		newLvl.put("procent_czerwonych", 100);
+		list.put(1, newLvl);
 		
 		//konfiguracja LVL2
-		list[2]= new HashMap<String,Integer>();
-		list[2].put("szybkosc_spadania_min", 4);
-		list[2].put("szybkosc_spadania_max", 6);
-		list[2].put("kolejna_kulka_min", 1500);
-		list[2].put("kolejna_kulka_max", 2000);
-		list[2].put("kolejny_poziom", 600);
-		list[2].put("procent_czerwonych", 80);
+		newLvl=new Hashtable<String,Integer>();
+		newLvl.put("szybkosc_spadania_min", 4);
+		newLvl.put("szybkosc_spadania_max", 6);
+		newLvl.put("kolejna_kulka_min", 1500);
+		newLvl.put("kolejna_kulka_max", 2000);
+		newLvl.put("kolejny_poziom", 600);
+		newLvl.put("procent_czerwonych", 80);
+		list.put(2, newLvl);
 		
 		//konfiguracja LVL3
-		list[3]= new HashMap<String,Integer>();
-		list[3].put("szybkosc_spadania_min", 6);
-		list[3].put("szybkosc_spadania_max", 8);
-		list[3].put("kolejna_kulka_min", 900);
-		list[3].put("kolejna_kulka_max", 1500);
-		list[3].put("kolejny_poziom", 1100);
-		list[3].put("procent_czerwonych", 65);
+		newLvl=new Hashtable<String,Integer>();
+		newLvl.put("szybkosc_spadania_min", 6);
+		newLvl.put("szybkosc_spadania_max", 8);
+		newLvl.put("kolejna_kulka_min", 900);
+		newLvl.put("kolejna_kulka_max", 1500);
+		newLvl.put("kolejny_poziom", 1100);
+		newLvl.put("procent_czerwonych", 65);
+		list.put(3, newLvl);
 		
 		//konfiguracja LVL4
-		list[4]= new HashMap<String,Integer>();
-		list[4].put("szybkosc_spadania_min", 8);
-		list[4].put("szybkosc_spadania_max", 10);
-		list[4].put("kolejna_kulka_min", 600);
-		list[4].put("kolejna_kulka_max", 1200);
-		list[4].put("kolejny_poziom", 0);
-		list[4].put("procent_czerwonych", 50);
+		newLvl=new Hashtable<String,Integer>();
+		newLvl.put("szybkosc_spadania_min", 8);
+		newLvl.put("szybkosc_spadania_max", 10);
+		newLvl.put("kolejna_kulka_min", 600);
+		newLvl.put("kolejna_kulka_max", 1200);
+		newLvl.put("kolejny_poziom", 0);
+		newLvl.put("procent_czerwonych", 50);
+		list.put(4, newLvl);
 
 	 }
 	
@@ -68,7 +74,7 @@ public class Config {
 	 */
 	public synchronized static int Get(int lvl, String key)
 	{
-		return list[lvl].get(key);
+		return (Integer)(list.get(lvl).get(key));
 	}
 	
 
