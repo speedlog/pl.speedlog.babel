@@ -1,7 +1,7 @@
 package pl.speedlog.babel;
 
 import android.graphics.Color;
-import pl.speedlog.babel.Board.Panel;
+import pl.speedlog.babel.Panel;
 
 public class RedBall extends Ball {
 

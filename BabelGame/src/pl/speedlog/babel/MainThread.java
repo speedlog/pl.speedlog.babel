@@ -1,6 +1,6 @@
 package pl.speedlog.babel;
 
-import pl.speedlog.babel.Board.Panel;
+import pl.speedlog.babel.Panel;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
@@ -17,7 +17,6 @@ public class MainThread extends Thread {
 	
 	private Panel panel;
 	private SurfaceHolder surfaceHolder; 
-	private boolean running;
 	
 	public MainThread(SurfaceHolder surfaceHolder, Panel gamePanel) {
 		super();
@@ -31,7 +30,7 @@ public class MainThread extends Thread {
 	 * @param running
 	 */
 	public void setRunning(boolean running) {
-		this.running = running;
+		Panel.thread_running = running;
 	}
 	
 	/**
@@ -53,7 +52,7 @@ public class MainThread extends Thread {
 		sleepTime = 0;
 
 		
-	    while(running) {
+	    while(Panel.thread_running) {
 	        c = null;
 	        try {
 	            c = surfaceHolder.lockCanvas(null);

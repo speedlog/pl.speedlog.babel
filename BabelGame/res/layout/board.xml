@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/MainLayout"> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:orientation="vertical"
+ android:layout_width="fill_parent"
+ android:layout_height="fill_parent">
+>
   <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
-  android:layout_height="fill_parent" android:weightSum="1" android:orientation="horizontal">
+  android:layout_height="20dp" android:weightSum="1.0" android:orientation="horizontal">
     <TextView android:layout_width="wrap_content" android:id="@+id/textView1" android:layout_height="wrap_content" android:text="Poziom: "></TextView>
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/lvl_label" android:focusableInTouchMode="true" android:focusable="true" android:text="1"></TextView>
     <TextView android:layout_marginLeft="100dp" android:layout_width="wrap_content" android:id="@+id/textView2" android:layout_height="wrap_content" android:text="Punkty: "></TextView>
@@ -11,5 +14,14 @@
     <TextView android:layout_marginLeft="100dp" android:layout_width="wrap_content" android:id="@+id/textView3" android:layout_height="wrap_content" android:text="Życia: "></TextView>
     <TextView android:layout_width="wrap_content" android:text="10" android:layout_height="wrap_content" android:id="@+id/missed_label"></TextView>
   </LinearLayout>
-  <pl.speedlog.babel.Panel></pl.speedlog.babel.Panel>
-</FrameLayout> 
+  <FrameLayout 
+	 android:layout_width="fill_parent"
+	 android:layout_height="fill_parent">
+   >
+	  <view class="pl.speedlog.babel.Panel"
+	  android:id="@+id/panel"
+	  android:layout_width="fill_parent" android:layout_height="fill_parent">
+	  </view>
+  </FrameLayout>	 
+</LinearLayout>
+

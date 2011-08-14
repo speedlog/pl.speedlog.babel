@@ -13,8 +13,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:label="@string/app_name" android:name=".Records"></activity>
+        <activity android:label="@string/app_name" android:name=".RecordsActivity"></activity>
         <activity android:label="@string/app_name" android:name="Board"></activity>
+        <activity android:name="GameOver"></activity>
 
     </application>
 </manifest>

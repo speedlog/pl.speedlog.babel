@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <TextView android:layout_width="fill_parent" android:gravity="center" android:textAppearance="?android:attr/textAppearanceLarge" android:text="Game Over" android:layout_height="wrap_content" android:layout_marginTop="35dp"></TextView>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:gravity="center" android:layout_marginTop="10dp">
+        <TextView android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:text="Zdobyte punkty:   "></TextView>
+        <TextView android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:id="@+id/collect_points" android:text=" "></TextView>
+    </LinearLayout>
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:gravity="center" android:layout_gravity="center" android:layout_marginTop="15dp" android:id="@+id/new_record_layout" android:visibility="invisible">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Twój nick: "></TextView>
+        <EditText android:layout_weight="1" android:layout_height="wrap_content" android:layout_width="180dp" android:id="@+id/nick_editbox">
+            <requestFocus></requestFocus>
+        </EditText>
+        <Button android:layout_width="wrap_content" android:text="Zapisz wynik" android:id="@+id/button_save" android:layout_height="wrap_content" android:onClick="clickSaveButton"></Button>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:gravity="center" android:layout_marginTop="15dp">
+        <Button android:layout_width="wrap_content" android:text="Nowa gra" android:id="@+id/button_go_ng" android:layout_height="wrap_content" android:onClick="clickNewGame"></Button>
+        <Button android:layout_width="wrap_content" android:text="Koniec gry" android:id="@+id/button_cf" android:layout_height="wrap_content" android:onClick="clickFinish"></Button>
+    </LinearLayout>
+    
+</LinearLayout>

@@ -1,6 +1,6 @@
 package pl.speedlog.babel;
 
-import pl.speedlog.babel.Board.Panel;
+import pl.speedlog.babel.Panel;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public abstract class Ball  {
 	
-	private Panel panel;
+	public Panel panel;
 	private Board board;
 	private final int points;
 	private final int x;	//wspó³rzêdna X œrodka kulki
@@ -89,7 +89,6 @@ public abstract class Ball  {
 	 */
 	public void OutOfScreen()
 	{
-		Log.d("BALL.class","visible=false");
 		SetVisible(false);
 	}
 	
@@ -98,10 +97,13 @@ public abstract class Ball  {
 	 */
 	public void MoveDown()
 	{
+		if(GetVisible())
+		{
 		y+=FallingSpeed;
 		
 		//sprawdzamy czy kulka wysz³a po za ekran
 		if(y-GetR()>panel.getHeight()) OutOfScreen();
+		}
 	}
 	
 	/**
@@ -128,7 +130,7 @@ public abstract class Ball  {
 	public void Shooted() {
 		
 		SetVisible(false);
-		//board.AddPoints(points);
+		board.AddPoints(points);
 	}
 	
 	/**
