@@ -21,7 +21,9 @@ public class RecordsActivity extends Activity {
         records=(TextView) findViewById(R.id.records_list);
         
         RecordsManager rm=new RecordsManager();
-        String allrec=rm.GetAllRecords();
+        String allrec="\t \t\n";
+        allrec+=rm.GetAllRecords();
+        allrec.replaceAll("\t", "\t\t");
         if(allrec.length()==0) records.setText("brak rekordów...");
         else records.setText(allrec);
     }

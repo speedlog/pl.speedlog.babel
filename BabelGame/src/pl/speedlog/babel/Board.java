@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Board extends Activity{
 	
@@ -61,7 +62,9 @@ public class Board extends Activity{
 	public void GameOver()
 	{
 		Panel.ThreadStop();
-		startActivity(new Intent(Board.this, GameOver.class));
+		Intent intent = new Intent(this, GameOver.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		finish();
+		startActivity(intent);
 	}
 	
 	/**
@@ -80,8 +83,9 @@ public class Board extends Activity{
 	 */
 	public void AddPoints(int points)
 	{
-		this.points+=points;
-		points_label.setText(new Integer(this.points).toString());
+		Board.points+=points;
+		points_label.setText(new Integer(Board.points).toString());
+		
 	}
 	
 	/**
@@ -90,6 +94,15 @@ public class Board extends Activity{
 	public static int GetPoints()
 	{
 		return points;
+	}
+	
+	/**
+	 * Setter points
+	 */
+	public void SetPoints(int points)
+	{
+		Board.points=points;
+		points_label.setText(new Integer(Board.points).toString());
 	}
 	
 	
@@ -110,6 +123,18 @@ public class Board extends Activity{
 		}
 	}
 	
+	/**
+	 * Set avaible lives (how much balls could be missed)
+	 */
+	public void SetMissedBall(int count)
+	{
+		missed_balls=count;
+		runOnUiThread(new Runnable() {
+		     public void run() {
+		 		missed_label.setText(new Integer(Config.GAME_OVER_MISS-missed_balls).toString());
+		    }
+		});
+	}
 	
 	/**
 	 * Funkcja losuje liczê w danym zakresie

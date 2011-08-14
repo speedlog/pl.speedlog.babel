@@ -2,7 +2,9 @@ package pl.speedlog.babel;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Toast;
 
 /**
  * Klasa powierzchni, na której bêdziemy rysowaæ obiekty
@@ -23,7 +26,7 @@ import android.view.ViewGroup.LayoutParams;
 	private ArrayList<Ball> balls = new ArrayList<Ball>();
 	private Board board;
 	public static boolean thread_running;
-	public Thread NewBallTheard=new Thread(this);
+	public Thread NewBallTheard;
 	
     
     public Panel(Context context) {
@@ -51,12 +54,22 @@ import android.view.ViewGroup.LayoutParams;
 
     	getHolder().addCallback(this);
     	
-		mThread = new MainThread(getHolder(), this);
-		setFocusable(true);
-		setClickable(true);
-		ThreadStart();
-
 	}
+    
+    public void initLevel()
+    {
+
+    	//w¹tek odpowiedzialny za tworzenie kulek
+		NewBallTheard=new Thread(this);
+		thread_running=true;
+		NewBallTheard.start();
+		
+		//w¹tek odpowiedzialny za przesuwanie kulek
+		mThread = new MainThread(getHolder(), this);
+    	mThread.setRunning(true);
+    	mThread.start();	
+
+    }
 
     
     
@@ -81,8 +94,33 @@ import android.view.ViewGroup.LayoutParams;
                 }
             }
              break; 
-        }        
-
+        }     
+        
+        //sprawdzamy czy koniec gry
+		if(Config.Get(board.level, "kolejny_poziom")!=0 && Board.GetPoints()>=Config.Get(board.level, "kolejny_poziom"))
+		{
+			Panel.ThreadStop();
+			
+			board.runOnUiThread(new Runnable() {
+			     public void run() {
+						//ustawiamy nowy poziom
+						board.SetLevel(board.level+1);
+						ClearAll();
+				    }
+			});
+			
+		    // prepare the alert box
+            AlertDialog.Builder alertbox = new AlertDialog.Builder(board);
+            alertbox.setMessage("Gratulacjê! Za chwilê rozpocznie siê kolejny LVL!");
+            alertbox.setNeutralButton("Dalej", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface arg0, int arg1) {
+                	initLevel();
+                }
+            });
+            alertbox.show();
+			
+			
+		}
         
         return true;
     }
@@ -119,9 +157,31 @@ import android.view.ViewGroup.LayoutParams;
 
         	}
         	else ball=null;
-
         }
+        
     }
+    
+    /**
+     * Init first LVL
+     */
+    public void InitFirstLvl()
+    {
+        balls.clear();
+        board.SetMissedBall(0);
+        board.SetLevel(1);
+        board.SetMissedBall(0);
+        board.SetPoints(0);
+    }
+    
+    /**
+     * Clear balls, surface and panel
+     */
+    public void ClearAll()
+    {
+        balls.clear();
+        board.SetMissedBall(0);
+    }
+    
     
     @Override
     public void onDraw(Canvas canvas) {
@@ -141,8 +201,8 @@ import android.view.ViewGroup.LayoutParams;
  
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-    	mThread.setRunning(true);
-    	mThread.start();
+    	InitFirstLvl();
+    	initLevel();
     }
  
     @Override

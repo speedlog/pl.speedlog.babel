@@ -37,6 +37,9 @@ public class GameOver extends Activity {
         rm=new RecordsManager();
         
     	points=Board.GetPoints();
+    	points_label=(TextView) findViewById(R.id.collect_points);
+    	points_label.setText(new Integer(points).toString());
+    	
         if(points>=rm.TopRecord()) {
         	LinearLayout nrl=(LinearLayout) findViewById(R.id.new_record_layout);
         	nrl.setVisibility(LinearLayout.VISIBLE);
@@ -53,7 +56,9 @@ public class GameOver extends Activity {
 	 */
 	public void clickNewGame(View view)
 	{
-		startActivity(new Intent(GameOver.this, Board.class));
+		Intent intent = new Intent(this, Board.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		finish();
+		startActivity(intent);
 	}
 	
 	/**
@@ -72,7 +77,10 @@ public class GameOver extends Activity {
 		if(nick_box.length()>0)
 		{
 		rm.AddNewRecord(new Record(nick_box.getText().toString(),points));
-		startActivity(new Intent(GameOver.this, RecordsActivity.class));
+		
+		Intent intent = new Intent(this, RecordsActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		finish();
+		startActivity(intent);
 		}
 		else Toast.makeText(this, "Wpisz Twój nick!", Toast.LENGTH_SHORT).show();
 	}

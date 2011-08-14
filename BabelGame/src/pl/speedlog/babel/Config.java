@@ -17,7 +17,7 @@ public class Config {
 	
 	private static Hashtable<Integer, Hashtable> list=new Hashtable<Integer, Hashtable>();
 	
-	final static int GAME_OVER_MISS=2; 	// liczba kulek, które gdy spadn¹ to nast¹pi GAME OVER
+	final static int GAME_OVER_MISS=10; 	// liczba kulek, które gdy spadn¹ to nast¹pi GAME OVER
 	final static int POINTS_FOR_RED=10;		// punkty po klikniêciu czerwonej kulki
 	final static int POINTS_FOR_BLACK=-15;	// punkty po klikniêciu czarnej kulki
 	final static int BALL_RADIUS=15;
@@ -27,17 +27,17 @@ public class Config {
 		//konfiguracja LVL1
 		Hashtable<String,Integer> newLvl=new Hashtable<String,Integer>();
 		newLvl.put("szybkosc_spadania_min", 1);
-		newLvl.put("szybkosc_spadania_max", 3);
+		newLvl.put("szybkosc_spadania_max", 2);
 		newLvl.put("kolejna_kulka_min", 2000);
 		newLvl.put("kolejna_kulka_max", 2500);
-		newLvl.put("kolejny_poziom", 250);
+		newLvl.put("kolejny_poziom", 200);
 		newLvl.put("procent_czerwonych", 100);
 		list.put(1, newLvl);
 		
 		//konfiguracja LVL2
 		newLvl=new Hashtable<String,Integer>();
-		newLvl.put("szybkosc_spadania_min", 2);
-		newLvl.put("szybkosc_spadania_max", 5);
+		newLvl.put("szybkosc_spadania_min", 1);
+		newLvl.put("szybkosc_spadania_max", 4);
 		newLvl.put("kolejna_kulka_min", 1500);
 		newLvl.put("kolejna_kulka_max", 2000);
 		newLvl.put("kolejny_poziom", 600);
@@ -46,8 +46,8 @@ public class Config {
 		
 		//konfiguracja LVL3
 		newLvl=new Hashtable<String,Integer>();
-		newLvl.put("szybkosc_spadania_min", 3);
-		newLvl.put("szybkosc_spadania_max", 7);
+		newLvl.put("szybkosc_spadania_min", 2);
+		newLvl.put("szybkosc_spadania_max", 5);
 		newLvl.put("kolejna_kulka_min", 900);
 		newLvl.put("kolejna_kulka_max", 1500);
 		newLvl.put("kolejny_poziom", 1100);
@@ -56,8 +56,8 @@ public class Config {
 		
 		//konfiguracja LVL4
 		newLvl=new Hashtable<String,Integer>();
-		newLvl.put("szybkosc_spadania_min", 4);
-		newLvl.put("szybkosc_spadania_max", 8);
+		newLvl.put("szybkosc_spadania_min", 3);
+		newLvl.put("szybkosc_spadania_max", 6);
 		newLvl.put("kolejna_kulka_min", 600);
 		newLvl.put("kolejna_kulka_max", 1200);
 		newLvl.put("kolejny_poziom", 0);
